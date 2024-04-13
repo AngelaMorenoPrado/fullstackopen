@@ -7,11 +7,17 @@ const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
+  const totalValues = good + neutral + bad
+  const average = totalValues === 0 ? 0 : (good * 1 + neutral * 0 + bad * -1) / totalValues
+  const positive = good === 0 ? 0 : (good / totalValues) * 100
 
   const values = [
     {state: 'good', value: good},
     {state: 'neutral', value: neutral},
-    {state: 'bad', value: bad}
+    {state: 'bad', value: bad},
+    {state: 'all', value: totalValues},
+    {state: 'average', value: average},
+    {state: 'positive', value: positive+' %'}
   ]
 
   const buttons = [
