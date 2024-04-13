@@ -1,6 +1,7 @@
 import Anecdote from './Anecdote'
 import Header from './Header'
 import Buttons from './Buttons'
+import MostVotedAnecdote from './MostVotedAnecdote'
 
 import { useState } from 'react'
 
@@ -39,6 +40,19 @@ const App = () => {
     })
   }
 
+  const getMostVotedAnecdote = () => {
+    let maxVotes = 0
+    let mostVotedAnecdote = {anecdote: anecdotes[0], points: 0}
+    for (const [key, value] of Object.entries(points)) {
+      const hasMoreVotes = value > maxVotes
+      if (hasMoreVotes) {
+        maxVotes = value
+        mostVotedAnecdote = {anecdote: anecdotes[key], points: value}
+      }
+    }
+    return mostVotedAnecdote
+  }
+
   const buttons = [
     {function: () => voteAnecdote(), text:'vote'},
     {function: () => generateRandomNumber(), text:'next anecdote'}
@@ -49,6 +63,8 @@ const App = () => {
       <Header text='Anecdote of the day' />
       <Anecdote text={anecdotes[selected]} />
       <Buttons data={buttons} />
+      <Header text='Anecdote with most votes' />
+      <MostVotedAnecdote data={getMostVotedAnecdote()} />
     </div>
   )
 }
