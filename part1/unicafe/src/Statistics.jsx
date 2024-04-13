@@ -17,9 +17,11 @@ const Statistics = (props) => {
     })
 
     return (
-        <>
-            {statistics}
-        </>
+        <table>
+            <tbody>
+                {statistics}
+            </tbody>
+        </table>
     )
   }
   
