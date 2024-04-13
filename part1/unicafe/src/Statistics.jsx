@@ -1,3 +1,5 @@
+import StatisticLine from './StatisticLine'
+
 const Statistics = (props) => {
     const isFeedbackMissing = props.values.slice(0, 3).every(item => item.value === 0)
     if (isFeedbackMissing) {
@@ -10,9 +12,7 @@ const Statistics = (props) => {
 
     const statistics = props.values.map((item, index) => {
         return (
-            <p key={index}>
-                {item.state} {item.value}
-            </p>
+            <StatisticLine text={item.state} value={item.value} key={index} />
         )
     })
 
