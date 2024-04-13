@@ -1,4 +1,6 @@
 import Anecdote from './Anecdote'
+import Header from './Header'
+import Buttons from './Buttons'
 
 import { useState } from 'react'
 
@@ -37,15 +39,16 @@ const App = () => {
     })
   }
 
+  const buttons = [
+    {function: () => voteAnecdote(), text:'vote'},
+    {function: () => generateRandomNumber(), text:'next anecdote'}
+  ]
+
   return (
     <div>
+      <Header text='Anecdote of the day' />
       <Anecdote text={anecdotes[selected]} />
-      <button onClick={() => voteAnecdote()}>
-        vote
-      </button>
-      <button onClick={() => generateRandomNumber()}>
-        next anecdote
-      </button>
+      <Buttons data={buttons} />
     </div>
   )
 }
