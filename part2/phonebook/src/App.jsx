@@ -3,10 +3,14 @@ import { useState } from 'react'
 function App() {
 
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '39-44-5325523' }
+    { name: 'Arto Hellas', number: '040-123456', id: 1 },
+    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
+    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
+    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
   ])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
+  const [filterValue, setFilterValue] = useState('')
 
   const handleNewName = (event) => {
     setNewName(event.target.value)
@@ -23,10 +27,13 @@ function App() {
       alert(`${newName} is already added to phonebook`)
       return
     }
+    const lastId = persons[persons.length - 1].id
     setPersons([
       ...persons,
-      { name: newName, number: newNumber }
+      { name: newName, number: newNumber, id: lastId + 1 }
     ])
+    setNewName('')
+    setNewNumber('')
   }
 
   const checkIfNameAlreadyExists = (name) => {
@@ -35,9 +42,15 @@ function App() {
     })
   }
 
+  const handleFiltering = (event) => {
+    setFilterValue(event.target.value)
+  }
+
   return (
     <div>
       <h1>Phonebook</h1>
+      <span>filter shown with </span> <input value={filterValue} onChange={handleFiltering} />
+      <h1>add a new</h1>
       <form onSubmit={addPerson}>
         <div>
           <span>name: </span>
@@ -50,9 +63,18 @@ function App() {
         <button type="submit">add</button>
       </form>
       <h2>Numbers</h2>
-      {persons.map(person => {
-        return <p key={person.name}>{ person.name } { person.number }</p>
-      })}
+      {
+        filterValue.length == 0
+        ? persons.map(person => {
+            return <p key={person.id}>{ person.name } { person.number }</p>
+          })
+        : persons.map(person => {
+            const containsFilteringValue = person.name.toLowerCase().includes(filterValue.toLowerCase())
+            return containsFilteringValue
+            ? <p key={person.id}>{ person.name } { person.number }</p>
+            : []
+        })
+      }
     </div>
   )
 }
